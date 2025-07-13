@@ -23,10 +23,12 @@ function Content({ Food }) {
       style={{
         backgroundImage: `url(${BG})`,
       }}
-      className="p-4 h-screen mt-2"
+      className=" mt-2 h-[90vh] overflow-scroll relative"
     >
-      <h1 className="text-xl font-bold mb-2 text-center">🍽️ Food Items</h1>
-      <div className="flex items-center justify-between gap-4 ">
+      <h1 className="text-3xl font-bold mb-2 text-center  fixed bg-yellow-300  rounded-lg z-30 w-screen">
+        🍽️ Food Items
+      </h1>
+      <div className="p-4 flex items-center justify-between gap-4  mt-20">
         {Food == "All" ? (
           <All data1={data}></All>
         ) : (
@@ -37,19 +39,18 @@ function Content({ Food }) {
   );
 }
 
-export default Content;
 function All({ data1 }) {
   return (
-    <div className="flex items-center justify-between gap-4">
+    <div className="flex items-center justify-between gap-4  flex-wrap h-[80vh]">
       {data1.map((item, index) => (
         <div
           key={index}
-          className="bg-zinc-600 opacity-60 rounded-xl shadow-lg hover:scale-102 transition-transform"
+          className="bg-zinc-600 opacity-60 rounded-xl shadow-lg hover:scale-102 w-[20vw]"
         >
           <img
             src={`http://localhost:3000${item.image}`}
             alt={item.name}
-            className="w-5xl h-24 object-cover"
+            className="w-5xl h-20 object-cover"
           />
           <div className="p-4">
             <h2 className="text-xl font-semibold mb-2">{item.name}</h2>
@@ -72,7 +73,7 @@ function FilterItem({ data1, Food }) {
     (item) => item.type.toLowerCase() === Food.toLowerCase()
   );
   return (
-    <div className="flex items-center justify-between gap-4">
+    <div className="flex items-center justify-between gap-4 flex-wrap overflow-y-scroll">
       {filteredData.map((item, index) => (
         <div
           key={index}
@@ -98,3 +99,5 @@ function FilterItem({ data1, Food }) {
     </div>
   );
 }
+
+export default Content;
