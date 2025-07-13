@@ -1,7 +1,11 @@
 import Foodzone from "./Images/logo.svg";
+import Content from "./Content";
+import { useState } from "react";
 
 const data = ["All", "Breakfast", "Lunch", "Dinner"];
+
 export default function Navigation() {
+  const [food, setFood] = useState("All");
   return (
     <div>
       <div className="flex items-center justify-between px-5 py-5">
@@ -23,20 +27,24 @@ export default function Navigation() {
           </form>
         </div>
       </div>
+      {console.log(food)}
       <div>
-        <Items></Items>
+        <Items Food={setFood}></Items>
       </div>
+      {console.log(food)}
+      <Content Food={food}></Content>
     </div>
   );
 }
 
-function Items() {
+function Items({ Food }) {
   return (
     <div className="flex items-center justify-center gap-2.5">
       {data.map((item, index) => (
         <button
           key={index}
           className="px-2 py-2 bg-red-500 text-sm rounded-lg  cursor-grab"
+          onClick={() => Food(item)}
         >
           {item}
         </button>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import BG from "./Images/bg.png";
 
-function Content() {
+function Content({ Food }) {
   const [serverUrl] = useState("http://localhost:3000");
   const [data, setData] = useState([]);
 
@@ -27,31 +27,74 @@ function Content() {
     >
       <h1 className="text-xl font-bold mb-2 text-center">🍽️ Food Items</h1>
       <div className="flex items-center justify-between gap-4 ">
-        {data.map((item, index) => (
-          <div
-            key={index}
-            className="bg-zinc-600 opacity-60 rounded-xl shadow-lg hover:scale-102 transition-transform"
-          >
-            <img
-              src={`http://localhost:3000${item.image}`}
-              alt={item.name}
-              className="w-5xl h-24 object-cover"
-            />
-            <div className="p-4">
-              <h2 className="text-xl font-semibold mb-2">{item.name}</h2>
-              <p className="text-black text-sm mb-3">{item.text}</p>
-              <div className="flex justify-between items-center">
-                <span className="text-lg font-bold">₹{item.price}</span>
-                <span className="px-3 py-1 bg-zinc-200 rounded-full text-sm capitalize">
-                  {item.type}
-                </span>
-              </div>
-            </div>
-          </div>
-        ))}
+        {Food == "All" ? (
+          <All data1={data}></All>
+        ) : (
+          <FilterItem Food={Food} data1={data} />
+        )}
       </div>
     </div>
   );
 }
 
 export default Content;
+function All({ data1 }) {
+  return (
+    <div className="flex items-center justify-between gap-4">
+      {data1.map((item, index) => (
+        <div
+          key={index}
+          className="bg-zinc-600 opacity-60 rounded-xl shadow-lg hover:scale-102 transition-transform"
+        >
+          <img
+            src={`http://localhost:3000${item.image}`}
+            alt={item.name}
+            className="w-5xl h-24 object-cover"
+          />
+          <div className="p-4">
+            <h2 className="text-xl font-semibold mb-2">{item.name}</h2>
+            <p className="text-black text-sm mb-3">{item.text}</p>
+            <div className="flex justify-between items-center">
+              <span className="text-lg font-bold">₹{item.price}</span>
+              <span className="px-3 py-1 bg-zinc-200 rounded-full text-sm capitalize">
+                {item.type}
+              </span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function FilterItem({ data1, Food }) {
+  const filteredData = data1.filter(
+    (item) => item.type.toLowerCase() === Food.toLowerCase()
+  );
+  return (
+    <div className="flex items-center justify-between gap-4">
+      {filteredData.map((item, index) => (
+        <div
+          key={index}
+          className="bg-zinc-600 opacity-60 rounded-xl shadow-lg hover:scale-102 transition-transform max-w-2xs"
+        >
+          <img
+            src={`http://localhost:3000${item.image}`}
+            alt={item.name}
+            className="w-5xl h-24 object-cover"
+          />
+          <div className="p-4">
+            <h2 className="text-xl font-semibold mb-2">{item.name}</h2>
+            <p className="text-black text-sm mb-3">{item.text}</p>
+            <div className="flex justify-between items-center">
+              <span className="text-lg font-bold">₹{item.price}</span>
+              <span className="px-3 py-1 bg-zinc-200 rounded-full text-sm capitalize">
+                {item.type}
+              </span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
