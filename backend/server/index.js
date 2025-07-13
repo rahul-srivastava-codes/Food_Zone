@@ -1,35 +1,18 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+const path = require("path");
 
-const data = [
-  {
-    name: "Kofta",
-    price: "450",
-  },
-  {
-    name: "Kulfi",
-    price: "45",
-  },
-  {
-    name: "Kaju katli",
-    price: "4500",
-  },
-  {
-    name: "Rasmalai",
-    price: "450",
-  },
-  {
-    name: "Kofta",
-    price: "450",
-  },
-];
+app.use("/images", express.static(path.join(__dirname, "../public/images")));
+
+const Api_data = require("../Api/Api");
+const cors = require("cors");
+app.use(cors());
+
 app.get("/", (req, res) => {
-  res.send(data);
+  res.send(Api_data);
 });
-app.get("/hello", (req, res) => {
-  res.send("Hello Rahul!");
-});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
